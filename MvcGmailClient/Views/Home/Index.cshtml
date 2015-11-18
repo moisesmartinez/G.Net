@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main Container -->
+<main id="main-container">
+    <!-- Page Header -->
+    <div class="content bg-gray-lighter">
+        <div class="row items-push">
+            <div class="col-sm-7">
+                <h1 class="page-heading">
+                    Welcome, @ViewData["Username"]
+                </h1>
+            </div>
+        </div>
+    </div>
+    <!-- END Page Header -->
+
+    <!-- Page Content -->
+    <div class="content">
+        <!-- Background Colored Tiles -->
+            <div class="row">
+            @if (ViewData["GmailAddress"] == null)
+            {
+                <div class="col-lg-4">
+                    <a class="block block-link-hover3" href="javascript:void(0)">
+                        <div class="block-content block-content-full clearfix">
+                            <i class="si si-envelope fa-2x text-muted pull-right"></i>
+                            <span class="h4 font-w700">error,</span> <span class="h4 text-muted"> @ViewData["Error"] </span>
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="col-lg-4">
+                    <a class="block block-link-hover2" href="@Url.Action("Inbox", "Email", new { page = "1" })">
+                        <div class="block-content block-content-full bg-primary clearfix">
+                            <i class="si si-envelope fa-2x text-white pull-right"></i>
+                            <span class="h4 font-w700 text-white">@ViewData["NewMessagesCount"]</span> <span class="h4 text-white-op">messages</span>
+                        </div>
+                    </a>
+                </div>
+            }
+                <div class="col-lg-4">
+                    <a class="block block-link-hover2" href="@Url.Action("Profile", "Home")">
+                        <div class="block-content block-content-full bg-flat clearfix">
+                            <i class="si si-user fa-2x text-white pull-right"></i>
+                            <span class="h4 font-w700 text-white">User</span> <span class="h4 text-white-op">settings</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4">
+                    <a class="block block-link-hover2" href="@Url.Action("Logout", "Account")">
+                        <div class="block-content block-content-full bg-city clearfix">
+                            <i class="si si-logout fa-2x text-white pull-right"></i>
+                            <span class="h4 font-w700 text-white">Log</span><span class="h4 text-white-op">out</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <!-- END Background Colored Tiles -->
+    </div>
+    <!-- END Page Content -->
+</main>
+<!-- END Main Container -->

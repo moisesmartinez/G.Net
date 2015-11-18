@@ -1,0 +1,115 @@
+﻿@model MvcGmailClient.Models.Register
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_SimpleLayout.cshtml";
+}
+
+<!-- Register Content -->
+<div class="content overflow-hidden">
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <!-- Register Block -->
+            <div class="block block-themed animated fadeIn">
+                <div class="block-header bg-success">
+                    <ul class="block-options">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#modal-terms">View Terms</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action(@"Login", "Account")" data-toggle="tooltip" data-placement="left" title="Log In"><i class="si si-login"></i></a>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Register</h3>
+                </div>
+                <div class="block-content block-content-full block-content-narrow">
+                    <!-- Register Title -->
+                    <h1 class="h2 font-w600 push-30-t push-5">G.Net</h1>
+                    <p>Please fill the following details to create a new account.</p>
+                    <!-- END Register Title -->
+
+                    <!-- Register Form -->
+                    <!-- jQuery Validation (.js-validation-register class is initialized in js/pages/base_pages_register.js) -->
+                    <!-- For more examples you can check out https://github.com/jzaefferer/jquery-validation -->
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "js-validation-register form-horizontal push-50-t push-50" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material form-material-success">
+                                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Please enter an username" })
+                                    @Html.LabelFor(model => model.Username)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material form-material-success">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Choose a strong password.." })
+                                    @Html.LabelFor(model => model.Password)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="form-material form-material-success">
+                                    @Html.PasswordFor(model => model.Password2, new { @class = "form-control", placeholder = "..and confirm it" })
+                                    @Html.LabelFor(model => model.Password2, "Confirm Password")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="form-material css-input switch switch-sm switch-success">
+                                    <input type="checkbox" id="AgreeWithTerms" name="AgreeWithTerms"><span></span> I agree with terms &amp; conditions
+                                </label>
+                                <input name="AgreeWithTerms" type="hidden" value="false">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-6 col-md-5">
+                                <button class="btn btn-block btn-success" type="submit"><i class="fa fa-plus pull-right"></i> Sign Up</button>
+                            </div>
+                        </div>
+                    }
+                    <!-- END Register Form -->
+                </div>
+            </div>
+            <!-- END Register Block -->
+        </div>
+    </div>
+</div>
+<!-- END Register Content -->
+
+
+<!-- Terms Modal -->
+<div class="modal fade" id="modal-terms" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-popout">
+        <div class="modal-content">
+            <div class="block block-themed block-transparent remove-margin-b">
+                <div class="block-header bg-primary-dark">
+                    <ul class="block-options">
+                        <li>
+                            <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                        </li>
+                    </ul>
+                    <h3 class="block-title">Terms &amp; Conditions</h3>
+                </div>
+                <div class="block-content">
+                    <p>With this web app you will be able to browse your Gmail messages (inbox, sent and deleted messages). You could also send text emails from here!</p>
+                    <p>Once you create your account, you would be able to add a gmail address/password to your account. This web app stores temporarily your Gmail credentials, but you will be able to completely delete your Gmail information from the database through the Profile Settings page.</p>
+                    <p>This webapp was made just for learning purposes (and because i was bored), so I don't need to store or gain profit from your information. If you still don't trust this app, create and use a temporary Gmail account.</p>
+                    <p></p>
+                    <p>If you're interested in learning ASP.NET MVC, take a look at the code and feel free to PM me any question you have: https://github.com/MoisesMartinez </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-default" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-primary" type="button" data-dismiss="modal"><i class="fa fa-check"></i> I agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Terms Modal -->
+

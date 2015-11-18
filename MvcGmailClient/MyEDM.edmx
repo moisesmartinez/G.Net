@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyGmailDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MyGmailDBModelStoreContainer">
+          <EntitySet Name="Gmails" EntityType="MyGmailDBModel.Store.Gmails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="MyGmailDBModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Gmails_Users" Association="MyGmailDBModel.Store.FK_Gmails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Gmails" EntitySet="Gmails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Gmails">
+          <Key>
+            <PropertyRef Name="GmailId" />
+          </Key>
+          <Property Name="GmailId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GmailAddress" Type="varchar" MaxLength="50" />
+          <Property Name="GmailPassword" Type="varchar" MaxLength="50" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Gmails_Users">
+          <End Role="Users" Type="MyGmailDBModel.Store.Users" Multiplicity="0..1" />
+          <End Role="Gmails" Type="MyGmailDBModel.Store.Gmails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Gmails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyGmailDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MyGmailDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Gmails" EntityType="MyGmailDBModel.Gmail" />
+          <EntitySet Name="Users" EntityType="MyGmailDBModel.User" />
+          <AssociationSet Name="FK_Gmails_Users" Association="MyGmailDBModel.FK_Gmails_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Gmails" EntitySet="Gmails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Gmail">
+          <Key>
+            <PropertyRef Name="GmailId" />
+          </Key>
+          <Property Name="GmailId" Type="Int32" Nullable="false" />
+          <Property Name="GmailAddress" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="GmailPassword" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="MyGmailDBModel.FK_Gmails_Users" FromRole="Gmails" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Gmails" Relationship="MyGmailDBModel.FK_Gmails_Users" FromRole="Users" ToRole="Gmails" />
+        </EntityType>
+        <Association Name="FK_Gmails_Users">
+          <End Role="Users" Type="MyGmailDBModel.User" Multiplicity="0..1" />
+          <End Role="Gmails" Type="MyGmailDBModel.Gmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Gmails">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyGmailDBModelStoreContainer" CdmEntityContainer="MyGmailDBEntities">
+          <EntitySetMapping Name="Gmails">
+            <EntityTypeMapping TypeName="MyGmailDBModel.Gmail">
+              <MappingFragment StoreEntitySet="Gmails">
+                <ScalarProperty Name="GmailId" ColumnName="GmailId" />
+                <ScalarProperty Name="GmailAddress" ColumnName="GmailAddress" />
+                <ScalarProperty Name="GmailPassword" ColumnName="GmailPassword" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="MyGmailDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MyEDM">
+        <EntityTypeShape EntityType="MyGmailDBModel.Gmail" Width="1.5" PointX="3" PointY="0.875" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyGmailDBModel.User" Width="1.5" PointX="0.75" PointY="1" Height="1.7879850260416674" IsExpanded="true" />
+        <AssociationConnector Association="MyGmailDBModel.FK_Gmails_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.8939925130208337" />
+          <ConnectorPoint PointX="3" PointY="1.8939925130208337" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

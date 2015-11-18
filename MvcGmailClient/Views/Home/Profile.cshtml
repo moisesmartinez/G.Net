@@ -1,0 +1,132 @@
+﻿@model MvcGmailClient.Models.Profile
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main Container -->
+<main id="main-container">
+    <!-- Page Header -->
+    <div class="content bg-gray-lighter">
+        <div class="row items-push">
+            <div class="col-sm-8">
+                <h1 class="page-heading">
+                    Profile<small> - Change your password or setup your Gmail address.</small>
+                </h1>
+            </div>
+        </div>
+        @if (TempData["success"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="fa fa-check"></i><a class="alert-link" href="javascript:void(0)">Success!</a> @TempData["success"]</p>
+            </div>
+        }
+        @if (TempData["failed"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="fa fa-check"></i><a class="alert-link" href="javascript:void(0)">Something failed!..</a> @TempData["failed"]</p>
+            </div>
+        }
+    </div>
+    <!-- END Page Header -->
+
+    <!-- Page Content -->
+    <div class="content content-narrow">
+        <!-- Material Design -->
+        <div class="row">
+            <div class="col-md-6">
+                <!-- Static Labels -->
+                <div class="block">
+                    <div class="block-header">
+                        <ul class="block-options">
+                            <li>
+                                <button type="button"><i class="si si-settings"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title">Account Settings</h3>
+                    </div>
+                    <div class="block-content block-content-narrow">
+                        @using (Html.BeginForm("Profile", "Home", FormMethod.Post, new { @class = "js-validation-profile form-horizontal push-10-t" }))
+                        {
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <div class="form-material form-material-primary">
+                                        @Html.PasswordFor(model => model.OldPassword, new { @class = "form-control", placeholder = "Please enter your old password" })
+                                        @Html.LabelFor(model => model.OldPassword, "Old Password")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <div class="form-material form-material-primary">
+                                        @Html.PasswordFor(model => model.NewPassword, new { @class = "form-control", placeholder = "Please enter your New Password.." })
+                                        @Html.LabelFor(model => model.NewPassword, "New Password")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <div class="form-material form-material-primary">
+                                        @Html.PasswordFor(model => model.NewPassword2, new { @class = "form-control", placeholder = "..and confirm it" })
+                                        @Html.LabelFor(model => model.OldPassword, "Confirm New Password")
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-sm btn-primary" type="submit" name="SubmitButton" value="Profile">Submit</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- END Static Labels -->
+            </div>
+
+            <div class="col-md-6">
+                <!-- Icon/Text Groups -->
+                <div class="block">
+                    <div class="block-header">
+                        <h3 class="block-title">Gmail Settings</h3>
+                    </div>
+                    <div class="block-content">
+                        @using (Html.BeginForm("GmailProfile", "Home", FormMethod.Post, new { @class = "js-validation-profile2 form-horizontal" }))
+                        {
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="form-material form-material-primary input-group">
+                                        @Html.TextBoxFor(model => model.GmailAddress, new { @class = "form-control", placeholder = "Gmail Account", @type = "email" })
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="form-material form-material-primary input-group">
+                                        @Html.PasswordFor(model => model.GmailPassword, new { @class = "form-control", placeholder = "Gmail Password" })
+                                        <span class="input-group-addon"><i class="fa fa-asterisk"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3 col-xs-6">
+                                    <button class="btn btn-sm btn-danger" type="submit" name="SubmitButton" value="RemoveGmail">Remove Gmail</button>
+                                </div>
+                                <div class="col-md-9 col-xs-6">
+                                    <button class="btn btn-sm btn-primary" type="submit" name="SubmitButton" value="Gmail" >Submit</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!-- END Icon/Text Groups -->
+            </div>
+        </div>
+        <!-- END Material Design -->
+    </div>
+    <!-- END Page Content -->
+</main>
+<!-- END Main Container -->

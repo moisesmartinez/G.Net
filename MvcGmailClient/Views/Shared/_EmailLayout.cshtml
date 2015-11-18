@@ -1,0 +1,397 @@
+﻿@model  MvcGmailClient.Models.MailFolder
+
+
+<!DOCTYPE html>
+<!--[if IE 9]>         <html class="ie9 no-focus"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-focus"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <title>@ViewBag.Title</title>
+
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="~/Content/assets/img/favicons/g-favicon.jpg">
+
+    <!-- END Icons -->
+
+    <!-- Stylesheets -->
+    <!-- Web fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
+
+    <!-- Page JS Plugins CSS go here -->
+
+    <!-- OneUI CSS framework -->
+    @Styles.Render("~/Content/oneuicss")
+    <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
+    <!-- <link rel="stylesheet" id="css-theme" href="~/Content/assets/css/themes/flat.min.css"> -->
+    <!-- END Stylesheets -->
+    </head>
+<body>
+
+    <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
+    <!-- Side Overlay-->
+    <!-- END Side Overlay -->
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <!-- Sidebar Scroll Container -->
+        <div id="sidebar-scroll">
+            <!-- Sidebar Content -->
+            <!-- Adding .sidebar-mini-hide to an element will hide it when the sidebar is in mini mode -->
+            <div class="sidebar-content">
+                <!-- Side Header -->
+                <div class="side-header side-content bg-white-op">
+                    <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                    <button class="btn btn-link text-gray pull-right hidden-md hidden-lg" type="button" data-toggle="layout" data-action="sidebar_close">
+                        <i class="fa fa-times"></i>
+                    </button>       
+
+                    <!-- Themes functionality initialized in App() -> uiHandleTheme() -->
+                            
+                    <a class="h5 text-white" href="@Url.Action("Index", "Home")">
+                        <i class="fa fa-envelope text-primary"></i> <span class="h5 font-w600 sidebar-mini-hide">G.Net</span>
+                    </a>
+                </div>
+                <!-- END Side Header -->
+
+                <!-- Side Content -->
+                <div class="side-content">
+                    <ul class="nav-main">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")"><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                        </li>
+                        <li class="nav-main-heading"><span class="sidebar-mini-hide">User Options</span></li>
+                        <li>
+                            <a href="@Url.Action("Profile", "Home")"><i class="si si-user"></i><span class="sidebar-mini-hide">Profile</span></a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Inbox", "Email", new { page = "1" })"><i class="si si-envelope"></i><span class="sidebar-mini-hide">Inbox</span></a>
+                        </li>
+                        <li class="nav-main-heading"><span class="sidebar-mini-hide">Logout</span></li>
+                        <li>
+                            <a href="@Url.Action("Logout", "Account")"><i class="si si-logout"></i><span class="sidebar-mini-hide">Logout</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END Side Content -->
+            </div>
+            <!-- Sidebar Content -->
+        </div>
+        <!-- END Sidebar Scroll Container -->
+    </nav>
+    <!-- END Sidebar -->
+
+    <!-- Header -->
+    <header id="header-navbar" class="content-mini content-mini-full">
+        <!-- Header Navigation Right -->
+        <ul class="nav-header pull-right">
+            <li>
+                <div class="btn-group">
+                    <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
+                        <img src="~/Content/assets/img/avatars/avatar.png" alt="Avatar">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="dropdown-header">Profile</li>
+                        <li>
+                            <a tabindex="-1" href="@Url.Action("Inbox", "Email", new { page = "1" })"">
+                                <i class="si si-envelope-open pull-right"></i>Inbox
+                            </a>
+                        </li>
+                        <li>
+                            <a tabindex="-1" href="@Url.Action("Profile", "Home")"">
+                                <i class="si si-user pull-right"></i>Profile
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a tabindex="-1" href="@Url.Action("Logout", "Account")">
+                                <i class="si si-logout pull-right"></i>Log out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!-- END Header Navigation Right -->
+
+        <!-- Header Navigation Left -->
+        <ul class="nav-header pull-left">
+            <li class="hidden-md hidden-lg">
+                <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
+                <button class="btn btn-default" data-toggle="layout" data-action="sidebar_toggle" type="button">
+                    <i class="fa fa-navicon"></i>
+                </button>
+            </li>
+        </ul>
+        <!-- END Header Navigation Left -->
+    </header>
+    <!-- END Header -->
+
+
+    <!-- Main Container -->
+    <main id="main-container">
+        <!-- Page Content -->
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-5 col-lg-3">
+                    <!-- Collapsible Inbox Navigation (using Bootstrap collapse functionality) -->
+                    <button class="btn btn-block btn-primary visible-xs push" data-toggle="collapse" data-target="#inbox-nav" type="button">Navigation</button>
+                    <div class="collapse navbar-collapse remove-padding" id="inbox-nav">
+                        <!-- Inbox Menu -->
+                        <div class="block">
+                            <div class="block-header bg-gray-lighter">
+                                <ul class="block-options">
+                                    <li>
+                                        <button data-toggle="modal" data-target="#modal-compose" type="button"><i class="fa fa-pencil"></i> New Message</button>
+                                    </li>
+                                </ul>
+                                <h3 class="block-title">Inbox</h3>
+                            </div>
+                            <div class="block-content">
+                                <ul class="nav nav-pills nav-stacked push">
+                                    <li class="@ViewData["InboxActive"]">
+                                        <a href="@Url.Action("Inbox", "Email", new { page = "1" })">
+                                            <span class="badge pull-right">@ViewData["NewMessagesCount"]</span><i class="fa fa-fw fa-inbox push-5-r"></i> Inbox
+                                        </a>
+                                    </li>
+                                    <li class="@ViewData["SentActive"]">
+                                        <a href="@Url.Action("Sent", "Email")">
+                                            <span class="badge pull-right"></span><i class="fa fa-fw fa-send push-5-r"></i> Sent
+                                        </a>
+                                    </li>
+                                    <li class="@ViewData["TrashActive"]">
+                                        <a href="@Url.Action("Trash", "Email")">
+                                            <span class="badge pull-right"></span><i class="fa fa-fw fa-trash push-5-r"></i> Trash
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- END Inbox Menu -->
+                    </div>
+                    <!-- END Collapsible Inbox Navigation -->
+                </div>
+                <div class="col-sm-7 col-lg-9">
+                    <!-- Message List -->
+                    <div class="block">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li>
+                                    <button class="js-tooltip" title="Previous 15 Messages" onclick="previousMessages();" type="button" data-toggle="block-option"><i class="si si-arrow-left"></i></button>
+                                </li>
+                                <li>
+                                    <button class="js-tooltip" title="Next 15 Messages" onclick="nextMessages();" type="button" data-toggle="block-option"><i class="si si-arrow-right"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" data-toggle="block-option" onclick="refreshMessages();" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="fullscreen_toggle"></button>
+                                </li>
+                            </ul>
+                            <div class="block-title text-normal">
+                                <strong>@ViewData["MessageRange"]</strong> <span class="font-w400">from</span> <strong>@ViewData["MessageCount"]</strong>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <!-- Messages Options -->
+                            <div class="push">
+                                <button class="btn btn-default " type="button"><i class="fa fa-times text-danger push-5-l push-5-r"></i> <span class="hidden-xs">Delete Selected Items</span></button>
+                            </div>
+                            <!-- END Messages Options -->
+
+                            <!-- Messages & Checkable Table (.js-table-checkable class is initialized in App() -> uiHelperTableToolsCheckable()) -->
+                            <div class="pull-r-l">
+                                <table class="js-table-checkable table table-hover table-vcenter">
+                                    <tbody>
+                                        @RenderBody()
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END Messages -->
+                        </div>
+                    </div>
+                    <!-- END Message List -->
+                </div>
+            </div>
+        </div>
+        <!-- END Page Content -->
+    </main>
+    <!-- END Main Container -->
+
+
+
+
+    <!-- Footer -->
+    <footer id="page-footer" class="content-mini content-mini-full font-s12 bg-gray-lighter clearfix">
+        <div class="pull-right">
+            <i class="fa fa-github"></i> Made by <a class="font-w600" href="http://github.com/MoisesMartinez/G.Net" target="_blank">Moises Martinez</a>
+        </div>
+    </footer>
+    <!-- END Footer -->
+
+
+    <!-- Apps Modal -->
+    <!-- Compose Modal -->
+    <div class="modal fade" id="modal-compose" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-top">
+            <div class="modal-content">
+                <div class="block block-themed block-transparent remove-margin-b">
+                    <div class="block-header bg-success">
+                        <ul class="block-options">
+                            <li>
+                                <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                            </li>
+                        </ul>
+                        <h3 class="block-title"><i class="fa fa-pencil"></i> New Message</h3>
+                    </div>
+                    <div class="block-content">
+                        @using (Ajax.BeginForm("SendEmail", "Email", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, OnSuccess = "composeMessageSuccess", OnFailure = "composeMessageFailed" }, new { @class = "form-horizontal push-10-t push-10" }))
+                        {
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material form-material-success floating input-group">
+                                        @Html.TextBoxFor(model => model.ComposeEmail.EmailTo, new { @class = "form-control", type = "email" })
+                                        @Html.LabelFor(model => model.ComposeEmail.EmailTo)
+                                        <span class="input-group-addon"><i class="si si-envelope-open"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material form-material-success floating input-group">
+                                        @Html.TextBoxFor(model => model.ComposeEmail.Subject, new { @class = "form-control" })
+                                        @Html.LabelFor(model => model.ComposeEmail.Subject)
+                                        <span class="input-group-addon"><i class="si si-book-open"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="form-material form-material-success floating">
+                                        @Html.TextAreaFor(model => model.ComposeEmail.Message, new { @class = "form-control", @rows = 6 })
+                                        @Html.LabelFor(model => model.ComposeEmail.Subject)
+                                    </div>
+                                    <div class="help-block text-right">Feel free to use common tags: &lt;blockquote&gt;, &lt;strong&gt;, &lt;em&gt;</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-sm btn-success" type="submit"><i class="fa fa-send push-5-r"></i> Send Message</button>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Compose Modal -->
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="modal-message" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popout">
+            <div class="modal-content">
+                <div class="block block-themed block-transparent remove-margin-b">
+                    <div class="block-header bg-primary-dark">
+                        <ul class="block-options">
+                            <li>
+                                <button data-toggle="tooltip" data-placement="left" title="Reply" type="button"><i class="si si-action-undo"></i></button>
+                            </li>
+                            <li>
+                                <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
+                            </li>
+                        </ul>
+                        <h3 id="MailSubject" class="block-title">Welcome to our service</h3>
+                    </div>
+                    
+                    <div class="block-content block-content-full block-content-mini bg-gray-lighter">
+                        <span class="font-s13 text-muted pull-right"><em id="MailDate">2 min ago</em></span>
+                        <a class="font-s13" id="MailFrom" href="javascript:void(0)">service@example.com</a>
+                    </div>
+                    <div id="MailBody" class="block-content">
+                        <p>Dear John,</p>
+                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                        <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                        <p>Best Regards,</p>
+                        <p>Ann Parker</p>
+                    </div>
+                    <div class="block-content bg-gray-lighter">
+                        <div class="row items-push">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Message Modal -->
+
+    <form id="page-form" action="@Url.Action("Inbox", "Email")">
+        <input type="hidden" id="page" name="page" value="@Request["page"]" />
+    </form>
+
+    </div>
+    <!-- END Page Container -->
+
+
+    @Scripts.Render("~/Content/oneuijs")
+    <script type="text/javascript">
+        //This function is called after the message in the "Compose Modal" was successfully sent. (view line 209)
+        function composeMessageSuccess() {
+            $('#modal-compose').modal('toggle');
+            $.notify({ message: '<strong>Success!</strong> Mail was sent successfully!', icon: 'fa fa-check' }, { type: 'success' });
+            return false;
+        }
+        //This function is called if the message in the "Compose Modal" failed. (view line 209)
+        function composeMessageFailed() {
+            $.notify({ message: '<strong>Oops!</strong> Your message could not be send.', icon: 'fa fa-times' }, { type: 'danger', element: '#modal-compose' });
+        }
+        //Pagination functions
+        function nextMessages() {
+            var $pageNumber = $("#page").val();
+            $("#page").val(parseInt($pageNumber) + 1)
+            $("#page-form").submit();
+        }
+        function previousMessages() {
+            var $pageNumber = $("#page").val();
+            if (parseInt($pageNumber) == 1)
+                return false;
+            $("#page").val(parseInt($pageNumber) - 1)
+            $("#page-form").submit();
+        }
+        function refreshMessages() {
+            var $pageNumber = $("#page").val();
+            $("#page").val($pageNumber)
+            $("#page-form").submit();
+        }
+        //Enf of Pagination functions
+
+        //This function is called if the "Modal Message" recieved the email succesfully
+        function onSuccessGetMessage(result) {
+            alert(result);
+            //Show data
+            if (result.Error) {
+                $.notify({ message: data.Error, icon: 'fa fa-times' }, { type: 'danger', element: '#modal-compose' });
+            }
+            else {
+                $("#MailSubject").html(result.Subject);
+                $("#MailDate").html(result.Date);
+                $("#MailFrom").html(result.From);
+                $("#MailBody").html(result.Body);
+
+                $('#modal-message').modal('toggle');
+            }
+        }
+        //This function is called if the "Modal Message" failed to get the message 
+        function onFailureGetMessage(result) {
+            $.notify({ message: '<strong>Error!</strong> The get email service is not working...', icon: 'fa fa-times' }, { type: 'danger', element: '#modal-compose' });
+        }
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

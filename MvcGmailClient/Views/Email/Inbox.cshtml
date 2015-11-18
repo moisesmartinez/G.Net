@@ -1,0 +1,30 @@
+﻿@model MvcGmailClient.Models.MailFolder
+
+@{
+    ViewBag.Title = "Inbox";
+    Layout = "~/Views/Shared/_EmailLayout.cshtml";
+}
+
+<tr>
+    @foreach (var gmailMessage in Model.Emails)
+    {
+        <tr>
+            <td class="text-center" style="width: 70px;">
+                <label class="css-input css-checkbox css-checkbox-primary">
+                    <input type="checkbox"><span></span>
+                </label>
+            </td>
+            <td class="hidden-xs font-w600" style="width: 140px;">@gmailMessage.From</td>
+            <td>
+                @Ajax.ActionLink(gmailMessage.Subject, "GetMail", "Email", new { Uid = gmailMessage.Uid, folderName = "Inbox" }, new AjaxOptions { OnSuccess = "onSuccessGetMessage", InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace, HttpMethod = "POST", OnFailure = "onFailureGetMessage" }, new { @class = "font-w600"})
+                <div class="text-muted push-5-t">@gmailMessage.Body</div>
+            </td>
+            <td class="visible-lg text-muted" style="width: 80px;">
+                
+            </td>
+            <td class="visible-lg text-muted" style="width: 120px;">
+                <em>@gmailMessage.Date</em>
+            </td>
+        </tr>
+    }
+</tr>

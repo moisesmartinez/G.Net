@@ -1,0 +1,1 @@
+All avatars used in this project are not available for commercial use!
