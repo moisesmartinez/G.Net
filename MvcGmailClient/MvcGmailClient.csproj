@@ -185,7 +185,11 @@
     <Content Include="Content\assets\img\avatars\avatar.png" />
     <Content Include="Content\assets\img\avatars\readme.txt" />
     <Content Include="Content\assets\img\favicons\g-favicon.jpg" />
-    <Content Include="Content\assets\js\oneui.min.js" />
+    <Content Include="Content\assets\js\core\oneui.min.js" />
+    <Content Include="Content\assets\js\plugins\bootstrap-notify.min.js" />
+    <Content Include="Content\assets\js\plugins\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\assets\js\plugins\jquery.validate.min.js" />
+    <Content Include="Content\assets\js\validation\form-validations.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />

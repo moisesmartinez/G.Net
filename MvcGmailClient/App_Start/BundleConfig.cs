@@ -42,7 +42,13 @@ namespace MvcGmailClient
             bundles.IgnoreList.Clear();
 
             bundles.Add(new ScriptBundle("~/Content/oneuijs").Include(
-                        "~/Content/assets/js/oneui.min.js"));
+                        "~/Content/assets/js/core/oneui.min.js"));
+
+            bundles.Add(new ScriptBundle("~/Content/otherjs").Include(
+                        "~/Content/assets/js/plugins/jquery.validate.min.js",
+                        "~/Content/assets/js/validation/form-validations.js",
+                        "~/Content/assets/js/plugins/jquery.unobtrusive-ajax.js",
+                        "~/Content/assets/js/plugins/bootstrap-notify.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/oneuicss").Include(
                         "~/Content/assets/css/oneui.min.css"));
