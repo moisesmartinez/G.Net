@@ -8,5 +8,8 @@ Core features:
  - After signing up, you can set up your gmail account.
  - Send new mail messages from this client.
  - After opening an "unread" message, its status changes to "already read".
- - You can delete your unwanted messages! (To-do!)
- - And you can also reply to any message you have in your mailboxes (To-do!)
+ - You can delete your unwanted messages!
+ - And you can also reply to any message you have in your mailboxes
+
+-------------
+**Demo:** http://mvcgmailclient.apphb.com/Login
